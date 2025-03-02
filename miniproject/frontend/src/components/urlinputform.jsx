@@ -2,11 +2,25 @@ import { useState } from "react";
 
 function UrlInputForm() {
   const [url, setUrl] = useState(""); // Store the input URL
+  const [response, setResponse] = useState(""); // Store the response from the API
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent page refresh
-    // Do something fun with the URL
-    alert(`You entered: ${url}`);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("http://127.0.0.1:8000/fastapi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: url }),
+    });
+
+    if (!res.ok) {
+        console.error("Error:", res.status);
+        return;
+      }
+    
+    const data = await res.json();
+    setResponse(data.processed_url);
   };
 
 return (
@@ -30,6 +44,10 @@ return (
                 Submit
             </button>
         </form>
+        <div className="mt-4 text-white text-lg font-semibold border-2 border-gray-400">
+            {response && <p> Processed URL: {response}</p>}
+        </div>
+        
     </div>
 );
 }
