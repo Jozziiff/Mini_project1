@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ShodanForm from '../components/shodaninputform';
 const About = () => {
     return (
         <div className='ml-24 bg-gray-800 p-4 w-full h-full'>
@@ -10,6 +10,7 @@ const About = () => {
                 Welcome to our website! We are dedicated to providing the best service possible.
                 If you have any questions, feel free to reach out to us at contact@ourwebsite.com.
             </p>
+            < ShodanForm />
         </div>
     );
 };
